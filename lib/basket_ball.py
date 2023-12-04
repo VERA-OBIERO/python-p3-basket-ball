@@ -182,3 +182,74 @@ def game_dict():
             ]
         }
     }
+
+
+def num_points_per_game(player_name):
+    for team, info in game_dict().items():
+        for data in info["players"]:
+            test = data['name']
+            check = player_name in test
+            if check:
+                return data['points_per_game']
+
+
+def player_age(player_name):
+    for team, info in game_dict().items():
+        for data in info["players"]:
+            test = data['name']
+            check = player_name in test
+            if check:
+                return data['age']
+
+
+def team_colors(team_name):
+    for team, info in game_dict().items():
+        test = info['team_name']
+        check = team_name in test
+        if check:
+            return info['colors']
+
+
+def team_names():
+    test = []
+    for team, info in game_dict().items():
+        test.append(info['team_name'])
+    return test 
+
+
+def player_numbers(team_name):
+    line_up = []
+    for team, info in game_dict().items():
+        for data in info["players"]:
+            test = info['team_name']
+            check = team_name in test
+            if check:
+                line_up.append(data['number'])
+    return line_up  
+
+
+def player_stats(player_name):
+    for team, info in game_dict().items():
+        for data in info["players"]:
+            test = data['name']
+            check = player_name in test
+            if check:
+                return data
+
+
+def average_rebounds_by_shoe_brand():
+    team_brands = []
+    shoe_averages = {}
+    for team, info in game_dict().items():
+        for data in info['players']:
+            if data['shoe_brand'] in team_brands:
+                shoe_averages[data['shoe_brand']].append(data["rebounds_per_game"])
+            else:
+                team_brands.append(data['shoe_brand'])
+                shoe_averages[data['shoe_brand']] = [data["rebounds_per_game"]]
+    for key, brand in shoe_averages.items():
+        average = sum(brand)/len(brand)
+        result = float(round(average,2))
+        print(f'{key}:  {result:.2f}')
+
+average_rebounds_by_shoe_brand()
